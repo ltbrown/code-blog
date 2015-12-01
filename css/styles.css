@@ -1,0 +1,113 @@
+/* Import normalize.css
+	================================ */
+@import url('http://necolas.github.io/normalize.css/3.0.2/normalize.css');
+
+/* General
+	================================ */
+body {
+  background: #fff;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 20px;
+  font: Helvetica Neue, Helvectica, Arial, serif;
+  font-weight: 300;
+  font-size: 1em;
+  line-height: 1.5em;
+  color: #8d9aa5;
+}
+
+a {
+  color: #3f8aBf;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #3079ab;
+}
+
+a:visited {
+  color: #5a6772;
+}
+
+h1, h2, h3 {
+  font-weight: 500;
+  color: #384047;
+}
+
+h1 {
+  font-size: 1.8em;
+  margin: 60px 0 20px;
+}
+
+h2 {
+    font-size: 1em;
+    font-weight: 300;
+    margin: 0;
+    padding: 30px 0 10px 0;
+}
+
+h3 {
+  font-size: .9em;
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+}
+
+h3 em {
+  font-style: normal;
+  font-weight: 300;
+  margin: 0 0 10px 5px;
+  padding: 0;
+  color: #8d9aa5;
+}
+
+/*set max-width to 50% so images aren't too big*/
+img{
+	max-width: 50%;
+	/*width: 400px;
+	height: auto;*/
+}
+
+/* Main Header
+	================================ */
+
+#main-header h1 {
+	margin-bottom: 0;
+}
+
+#main-header h2 {
+	padding: 10px 0 0 0;
+}
+
+/* Articles
+	================================ */
+
+.byline{
+	font-size: .85em;
+}
+
+.pull-right{
+	float: right;
+	margin: 20px 0 20px 20px;
+}
+
+.pull-left{
+	float: left;
+	margin: 20px 20px 20px 0;
+}
+
+/* Template
+	================================ */
+
+.arTemplate {
+	display: none;
+}
+
+/* Float Clearfix
+	================================ */
+
+.clearfix:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
