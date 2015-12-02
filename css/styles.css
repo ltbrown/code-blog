@@ -154,6 +154,12 @@ ARTICLES
 	margin: 20px 20px 20px 0;
 }
 
+#select-category,
+#select-author {
+	width: 180px;
+	/*text-transform: lowercase;*/
+}
+
 /*************************************************
 FOOTER
 *************************************************/
@@ -271,5 +277,15 @@ nav a.selected, nav a:hover {
     font-size: 0.825em;
     margin-bottom: 20px;
   }
+
+  /*.pull-right,
+  .pull-left {
+	float: none;
+
+  }
+
+  img{
+  	width: 100%;
+  }*/
 
 }

@@ -7,6 +7,7 @@ blog.main = (function() {
 		$articleDetail,
 		$firstParagraph,
 		$selectAuthor,
+		$optgroup,
 		$selectCategory;
 
 	// variables
@@ -44,15 +45,49 @@ blog.main = (function() {
 				});
 				$('.about').on('click', function(e) {
 					e.preventDefault();
-					console.log('click');
+					//console.log('click');
 					$('.about-container').toggle();
 				});
-				//Bind change listener to the select change
-				//Events
-				$selectAuthor.on('change', function(e){
-				  //Go to select's location
-				  //window.location = $select.val();
-				  //TODO: hide/show articles that contain $select.val();
+
+				//Bind change listener to the select elements
+				$selectAuthor.on('change', function(){
+				 	$('article').hide();
+				 	// resets the category filter select element
+				 	$selectCategory.prop('selectedIndex',0);
+
+				  	// selected filter value
+				  	var filterSelection = $selectAuthor.val(); // horse whisperer
+
+				  	$('#articles').find('.byline a').each(function(){
+				  		var authorName = $(this).text(); // horse whisperer
+				  		if( authorName == filterSelection){
+				  			//console.log('matched' , $(this).closest('article'));
+				  			$(this).closest('article').fadeIn();
+				  		}
+				  	});
+				});
+
+				$selectCategory.on('change', function(){
+					$('article').hide();
+					// resets the author filter select element
+					$selectAuthor.prop('selectedIndex',0);
+
+				  	var filterSelection = $selectCategory.val();
+				  	var filterSelectionCat = "cat-" + filterSelection;
+				  	//console.log(filterSelectionCat);
+
+				  	$('article').each(function(){
+				   		//console.log($(this).attr('class'));
+				   		var classNames = $(this).attr('class');
+				   		//console.log(typeof classNames);
+				   		// make it an array and slit on space ' '
+				   		var catArray = classNames.split(' ');
+				   		console.log(catArray[0]);
+				   		if(catArray.indexOf(filterSelectionCat) > -1){
+				   			// fadeIn articles with matching category
+				   			$(this).fadeIn();
+				   		}
+				  	});
 				});
 			},
 
@@ -67,79 +102,71 @@ blog.main = (function() {
 				});
 				// hide the hide toggle on each article
 				$('.hide').hide();
-				self.makeAuthorFilter();
 				self.makeCategoryFilter();
+				self.makeAuthorFilter();
 				self.addEventListeners();
 			},
 
 			// makeAuthorFilter
 			makeAuthorFilter: function() {
-				$selectAuthor = $("<select></select>");
+				$selectAuthor = $('<select id="select-author"></select>');
+				var $option = $('<option value="all">Filter by Authors</option>');
+				// $optgroup = $('<optgroup label="Authors"></optgroup>');
+				// $selectAuthor.append($optgroup);
+				$selectAuthor.append($option);
 				$('#articles').prepend($selectAuthor);
-				var testArray = [];
-				var optionText;
-				$('.byline a').each(function(){
-					var $anchor = $(this);
-					var $option = $("<option></option>");
+				var authorArray = [];
+
+				for(var i = 0; i < blog.rawdata.length; i++ ){
+					var author = blog.rawdata[i].author;
+					authorArray.push(author);
+				}
+
+				var uniqueAuthors = $.unique(authorArray);
+
+				//console.log(authorArray.join(', '));
+				//console.log('new :' + $.unique(authorArray));
+
+				for(var i = 0; i < uniqueAuthors.length; i++ ){
+					$option = $("<option></option>");
 					//Option's value is the href
-					$option.val($anchor.text());
+					$option.val(uniqueAuthors[i]);
 					//Option's text is the text of link
-					$option.text($anchor.text());
-
-					optionText = $anchor.text();
-					//console.log(optionText);
-					testArray.push(optionText);
-					//console.log(testArray.join(', '));
-					// var dup = $selectAuthor.filter();
-					// console.log(dup);
-					// if(!dup) {
-					// 	//Append option to select element
-					// 	$selectAuthor.append($option);
-					// }
-
-					// todo: if we have a repeat don't append -THIS IS NOT WORKING
-					// $selectAuthor.filter('option').each(function(){
-					// 	var $this = $(this);
-					// 	if($this.is($option)){
-					// 		// do nothing
-					// 	}else{
-					// 		//Append option to select element
-					// 		$selectAuthor.append($option);
-					// 	}
-					// });
-
-					//Append option to select element
+					$option.text(uniqueAuthors[i]);
+					//$optgroup.append($option);
 					$selectAuthor.append($option);
-				})
+				}
 			},
 
-			// makeAuthorFilter
+
+			// makeCategoryFilter
 			makeCategoryFilter: function() {
-				$selectAuthor = $("<select></select>");
-				$('#articles').prepend($selectAuthor);
+				$selectCategory = $('<select id="select-category"></select>');
+				var $option = $('<option value="all">Filter by Category</option>');
+				$selectCategory.append($option);
+				$('#articles').prepend($selectCategory);
 
-				$('.byline a').each(function(){
-					var $anchor = $(this);
-					var $option = $("<option></option>");
+				var catArray = [];
+
+				for(var i = 0; i < blog.rawdata.length; i++ ){
+					var cat = blog.rawdata[i].category;
+					catArray.push(cat);
+				}
+
+				var uniqueCategories = $.unique(catArray);
+
+				//console.log(authorArray.join(', '));
+				//console.log('new :' + $.unique(authorArray));
+
+				for(var i = 0; i < uniqueCategories.length; i++ ){
+					$option = $("<option></option>");
 					//Option's value is the href
-					$option.val($anchor.text());
+					$option.val(uniqueCategories[i]);
 					//Option's text is the text of link
-					$option.text($anchor.text());
-
-					// todo: if we have a repeat don't append -THIS IS NOT WORKING
-					$selectAuthor.filter('option').each(function(){
-						var $this = $(this);
-						if($this.is($option)){
-							// do nothing
-						}else{
-							//Append option to select element
-							$selectAuthor.append($option);
-						}
-					});
-
-					//Append option to select element
-					$selectAuthor.append($option);
-				})
+					$option.text(uniqueCategories[i]);
+					//$optgroup.append($option);
+					$selectCategory.append($option);
+				}
 			},
 
 			// sort articles on publishedOn date (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
@@ -198,10 +225,13 @@ blog.main = (function() {
 	};
 
 	self.makeArticle.prototype.toHtml = function() {
+		var categoryClassName = 'cat-' + this.category;
 		// makes a copy of article.arTemplate
 		var $newAr = $('.arTemplate').clone();
 		// removes the .arTemplate class from the jquery object you just created with clone()
 		$newAr.removeClass('arTemplate');
+
+		$newAr.addClass(categoryClassName);
 		// find the first instance of h1 tag and put the value of the title property
 		$newAr.find('h1:first').html(this.title);
 		// find the anchor tag in .byline and put the value of the author property
