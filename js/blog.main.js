@@ -3,7 +3,11 @@ var blog = blog || {};
 blog.main = (function() {
 	'use strict';
 	// cached jquery objects
-	var $pLog = $('#pLog');
+	var $pLog = $('#pLog'),
+		$articleDetail,
+		$firstParagraph,
+		$selectAuthor,
+		$selectCategory;
 
 	// variables
 	var article,
@@ -11,10 +15,11 @@ blog.main = (function() {
 		 self = {
 
 			init: function() {
-				self.addEventListeners();
 				// calls the sortArticlesOnPubDate to sort the blog.rawdata array based on the publishedOn key of each article object.
 				self.sortArticlesOnPubDate(blog.rawdata);
 				self.makeArticles();
+				self.initArticles();
+
 				// tests sorting functionality
 				// self.printPubDate(blog.rawdata, "Published On Date");
 				// self.sortArticlesOnPubDate(blog.rawdata);
@@ -25,6 +30,116 @@ blog.main = (function() {
 			// event listeners for this module
 			addEventListeners: function() {
 				//console.log("hi");
+				$('.more').on('click', function(e) {
+					e.preventDefault();
+					$(this).prev().siblings().slideDown();
+					$(this).next().show();
+					$(this).hide();
+				});
+				$('.hide').on('click', function(e) {
+					e.preventDefault();
+					$(this).siblings().filter('p:nth-of-type(n+2)').slideUp();
+					$(this).prev().show();
+					$(this).hide();
+				});
+				$('.about').on('click', function(e) {
+					e.preventDefault();
+					console.log('click');
+					$('.about-container').toggle();
+				});
+				//Bind change listener to the select change
+				//Events
+				$selectAuthor.on('change', function(e){
+				  //Go to select's location
+				  //window.location = $select.val();
+				  //TODO: hide/show articles that contain $select.val();
+				});
+			},
+
+			// initialize the articles section
+			initArticles: function() {
+				$articleDetail = $('.article-body p:nth-of-type(n+2)');
+				$articleDetail.hide();
+				$firstParagraph = $('.article-body');
+				$firstParagraph.each(function(){
+					$(this).append('<a href="#" class="more"> more&darr;</a>');
+					$(this).append('<a href="#" class="hide"> hide&uarr;</a>');
+				});
+				// hide the hide toggle on each article
+				$('.hide').hide();
+				self.makeAuthorFilter();
+				self.makeCategoryFilter();
+				self.addEventListeners();
+			},
+
+			// makeAuthorFilter
+			makeAuthorFilter: function() {
+				$selectAuthor = $("<select></select>");
+				$('#articles').prepend($selectAuthor);
+				var testArray = [];
+				var optionText;
+				$('.byline a').each(function(){
+					var $anchor = $(this);
+					var $option = $("<option></option>");
+					//Option's value is the href
+					$option.val($anchor.text());
+					//Option's text is the text of link
+					$option.text($anchor.text());
+
+					optionText = $anchor.text();
+					//console.log(optionText);
+					testArray.push(optionText);
+					//console.log(testArray.join(', '));
+					// var dup = $selectAuthor.filter();
+					// console.log(dup);
+					// if(!dup) {
+					// 	//Append option to select element
+					// 	$selectAuthor.append($option);
+					// }
+
+					// todo: if we have a repeat don't append -THIS IS NOT WORKING
+					// $selectAuthor.filter('option').each(function(){
+					// 	var $this = $(this);
+					// 	if($this.is($option)){
+					// 		// do nothing
+					// 	}else{
+					// 		//Append option to select element
+					// 		$selectAuthor.append($option);
+					// 	}
+					// });
+
+					//Append option to select element
+					$selectAuthor.append($option);
+				})
+			},
+
+			// makeAuthorFilter
+			makeCategoryFilter: function() {
+				$selectAuthor = $("<select></select>");
+				$('#articles').prepend($selectAuthor);
+
+				$('.byline a').each(function(){
+					var $anchor = $(this);
+					var $option = $("<option></option>");
+					//Option's value is the href
+					$option.val($anchor.text());
+					//Option's text is the text of link
+					$option.text($anchor.text());
+
+					// todo: if we have a repeat don't append -THIS IS NOT WORKING
+					$selectAuthor.filter('option').each(function(){
+						var $this = $(this);
+						if($this.is($option)){
+							// do nothing
+						}else{
+							//Append option to select element
+							$selectAuthor.append($option);
+						}
+					});
+
+					//Append option to select element
+					$selectAuthor.append($option);
+				})
 			},
 
 			// sort articles on publishedOn date (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
@@ -61,7 +176,7 @@ blog.main = (function() {
 				for(var i = 0; i < blog.rawdata.length; i++ ){
 					// var that holds each article object in the blog.rawdata array
 					article = blog.rawdata[i];
-					console.log('article index = ' + i);
+					//console.log('article index = ' + i);
 					// pass the article object to the makeAr constructor function
 					var arObj = new self.makeArticle(article);
 					// append the cloned template to #articles section
@@ -78,15 +193,7 @@ blog.main = (function() {
 				this.authorUrl = obj.authorUrl;
 				this.publishedOn = obj.publishedOn;
 				this.body = obj.body;
-			},
-
-			// currently not used - remove later
-			setFilter: function(filterID) {},
-
-			// bubble items with class tagID to the top of the list, leaving all others in their natural order
-			sortList: function(tagID) {},
-
-			clearSort: function() {},
+			}
 
 	};
 

@@ -1,14 +1,14 @@
-/* Import normalize.css
-	================================ */
+/*************************************************
+IMPORT NORMALIZE
+*************************************************/
 @import url('http://necolas.github.io/normalize.css/3.0.2/normalize.css');
 
-/* General
-	================================ */
+/*************************************************
+GENERAL
+*************************************************/
 body {
   background: #fff;
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 0 20px;
+
   font: Helvetica Neue, Helvectica, Arial, serif;
   font-weight: 300;
   font-size: 1em;
@@ -17,16 +17,7 @@ body {
 }
 
 a {
-  color: #3f8aBf;
   text-decoration: none;
-}
-
-a:hover {
-  color: #3079ab;
-}
-
-a:visited {
-  color: #5a6772;
 }
 
 h1, h2, h3 {
@@ -66,12 +57,33 @@ img{
 	max-width: 50%;
 	/*width: 400px;
 	height: auto;*/
+	padding: 20px;
+	border: 1px solid rgba(30,30,30,0.1);
 }
 
-/* Main Header
-	================================ */
+span {
+  color: pink;
+}
+
+/*************************************************
+HEADING - Main
+*************************************************/
+
+#main-header {
+/*  float: left;*/
+  margin: 0 0 30px 0;
+  /* trbl */
+  padding: 5px 0 0 0;
+  width: 100%;
+}
+
+#logo {
+  text-align: center;
+  margin: 0;
+}
 
 #main-header h1 {
+	margin-top: 23px;
 	margin-bottom: 0;
 }
 
@@ -79,35 +91,185 @@ img{
 	padding: 10px 0 0 0;
 }
 
-/* Articles
-	================================ */
+/*************************************************
+NAVIGATION
+*************************************************/
 
-.byline{
-	font-size: .85em;
+nav {
+  text-align: center;
+  padding: 10px 0;
+  margin: 20px 0 0;
 }
 
-.pull-right{
+nav ul {
+  list-style: none;
+  margin: 0 10px;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+}
+
+nav a {
+  /*font-weight: 800;*/
+  padding: 15px 9px;
+}
+
+#wrapper,
+.about-container {
+	max-width: 980px;
+  	margin: 0 auto;
+  	padding: 0 20px;
+}
+
+.about-container {
+	margin-bottom: 50px;
+	display: none;
+}
+
+/*************************************************
+ARTICLES
+*************************************************/
+
+#articles select {
+	display: block;
+	margin-top: 10px;
+}
+
+.byline,
+.more,
+.hide {
+	font-size: .85em;
+	font-style: italic;
+}
+
+.pull-right {
 	float: right;
 	margin: 20px 0 20px 20px;
 }
 
-.pull-left{
+.pull-left {
 	float: left;
 	margin: 20px 20px 20px 0;
 }
 
-/* Template
-	================================ */
+/*************************************************
+FOOTER
+*************************************************/
+
+footer {
+  font-size: 0.75em;
+  /*text-align: center;*/
+  clear: both;
+  padding-top: 50px;
+  color: #ccc;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 20px 20px;
+}
+
+/*************************************************
+TEMPLATE
+*************************************************/
 
 .arTemplate {
 	display: none;
 }
 
-/* Float Clearfix
-	================================ */
+/*************************************************
+CLEARFIX
+*************************************************/
 
 .clearfix:after {
   content: " ";
   display: table;
   clear: both;
+}
+
+/*************************************************
+COLORS
+*************************************************/
+
+/* site body */
+body {
+  background-color: #fff;
+  color: #999;
+}
+
+/* green header */
+#main-header {
+  background: #6ab47b;
+  border-color: #599a68;
+}
+
+/* nav background on mobile */
+nav {
+  background: #599a68;
+}
+
+/* logo text */
+#main-header h1,
+#main-header h2 {
+  color: #fff;
+}
+
+/* links */
+a {
+  color: #6ab47b;
+}
+
+/* nav link */
+nav a, nav a:visited {
+  color: #fff;
+}
+
+/* selected nav link */
+nav a.selected, nav a:hover {
+  color: #32673f;
+}
+
+/*************************************************
+  Media Queries
+  *************************************************/
+
+/* Large tablets and small desktops */
+@media screen and (min-width: 660px) {
+
+  /*************************************************
+  HEADER
+  *************************************************/
+
+  #main-header {
+    height: 90px;
+    border-bottom: 5px solid #599a68;
+    margin-bottom: 60px;
+  }
+
+  nav {
+    background: none;
+    float: right;
+    font-size: 1.125em;
+    margin-right: 5%;
+    text-align: right;
+    width: 45%;
+  }
+
+  #logo {
+    float: left;
+    margin-left: 5%;
+    text-align: left;
+    width: 45%;
+  }
+
+  #main-header h1 {
+    font-size: 2.45em;
+
+  }
+
+  #main-header h2 {
+    font-size: 0.825em;
+    margin-bottom: 20px;
+  }
+
 }
