@@ -8,18 +8,27 @@
 </head>
 <body>
 	<header id="main-header">
-	    <h1>Laurie Brown</h1>
-	    <h2>Front-End Developer</h2>
-		    <nav>
-		        <ul>
-		          <li><a href="index.html" class="selected">Blog</a></li>
-		          <li><a href="#">About (coming soon)</a></li>
-		          <li><a href="https://github.com/ltbrown/" target="_blank">GitHub</a></li>
-		        </ul>
-		    </nav>
+		<div id="logo">
+		    <h1>Laurie Brown</h1>
+		    <h2>Front-End Developer</h2>
+	    </div>
+	    <nav>
+	        <ul>
+	          <li><a href="index.html" class="selected">Blog</a></li>
+	          <li><a href="#" class="about">About</a></li>
+	          <li><a href="https://github.com/ltbrown/" target="_blank">GitHub</a></li>
+	        </ul>
+	    </nav>
     </header>
+    <div class="about-container">
+	    <section>
+	        <p>Hello, my name is Laurie Brown and I'm a self-taught coding enthusiast living in Portland, Oregon. I have 10+ years experience using mainly front-end technologies and APIs to bring beautiful designs and user experiences to life. I've worked in the fast-paced advertising industry my whole career with years of experience at Fallon in Minneapolis, Minnesota and Wieden Kennedy here in Portland, Oregon. My experience ranges from project management to studio production and interactive programming. I've had the great fortune to work on projects for clients including Wieden Kennedy, Coke, Nike, Target, Sony, Dodge, Starbucks, and BMW to name a few.</p>
+	        <p>Feel free to visit my <a href="http://cargocollective.com/twoPOiNT/index">Cargo portfolio.</a></p>
+	        <p>And here's my <a href="http://ltbrown.com/resume_2015.pdf">resume.</a></p>
+	    </section>
+    </div>
 	<div id="wrapper">
-		<!-- <p id="pLog"></p> -->
+		<p id="pLog"></p>
 	  	<section id="articles">
 		    <article class="arTemplate clearfix">
 			    <header>
@@ -38,6 +47,6 @@
   	<script src="js/libs/jquery-2.1.4.min.js"></script>
   	<script src="js/blog.js"></script>
   	<script src="js/blogArticles.js"></script>
-  	<script src="js/main.js"></script>
+  	<script src="js/blog.main.js"></script>
 </body>
 </html>

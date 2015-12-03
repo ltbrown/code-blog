@@ -40,3 +40,4 @@ printAuthors(articles, "Article authors");
 sortArticlesOnAuthor(articles);
 mylog("<br>After sorting:");
 printAuthors(articles, "Article authors");
+
