@@ -304,3 +304,13 @@ nav a.selected, nav a:hover {
   }*/
 
 }
+
+#pLog{
+	/*height: 500px;
+	background-color: pink;*/
+	display:none;
+}
+
+#articles{
+	/*display: none;*/
+}

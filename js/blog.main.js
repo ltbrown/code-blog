@@ -18,7 +18,8 @@ blog.main = (function() {
 			init: function() {
 				// calls the sortArticlesOnPubDate to sort the blog.rawdata array based on the publishedOn key of each article object.
 				self.sortArticlesOnPubDate(blog.rawdata);
-				self.makeArticles();
+				//self.makeArticles();
+				self.makeArticlesHandlebars();
 			},
 
 			// event listeners for this module
@@ -36,7 +37,6 @@ blog.main = (function() {
 					$(this).siblings().filter('p:nth-of-type(n+2)').hide();
 					$(this).prev().show();
 					$(this).hide();
-
 				});
 				$('.about').on('click', function(e) {
 					e.preventDefault();
@@ -60,6 +60,10 @@ blog.main = (function() {
 				  			// fadeIn the closest article
 				  			$(this).closest('article').fadeIn();
 				  		}
+				  		if(filterSelection === 'all'){
+				   			// console.log('hi');
+					  		$('article').show();
+					  	}
 				  	});
 				});
 
@@ -83,7 +87,12 @@ blog.main = (function() {
 				   			// fadeIn articles with matching category
 				   			$(this).fadeIn();
 				   		}
+				   		if(filterSelection === 'all'){
+				   			// console.log('hi');
+					  		$('article').show();
+					  	}
 				  	});
+
 				});
 			},
 
@@ -195,6 +204,23 @@ blog.main = (function() {
 					$('#articles').append(arObj.toHtml());
 				}
 				// set initial state
+				self.initArticles();
+			},
+
+			// makeArticlesHandlebars
+			makeArticlesHandlebars: function() {
+				var template = $('#itemTemplate').html();
+				// Handlebars compiles the template into a callable function
+			      var renderer = Handlebars.compile(template);
+			      // put data in a variable
+			      var articles = blog.rawdata;
+			      // call the compiled function with the template date
+			      var result = renderer({articles})
+			      //var result = renderer({blog.raw});
+			      console.log(result);
+			      $('#articles').append(result);
+
+			    // call init articles()
 				self.initArticles();
 			},
 

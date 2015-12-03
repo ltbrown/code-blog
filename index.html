@@ -29,7 +29,7 @@
 	<div id="wrapper">
 		<p id="pLog"></p>
 	  	<section id="articles">
-		    <article class="arTemplate clearfix">
+		   <!--  <article class="arTemplate clearfix">
 			    <header>
 			        <h1>Title</h1>
 			        <div class="byline">
@@ -37,16 +37,33 @@
 			        </div>
 			    </header>
 		      	<section class="article-body clearfix">Body</section>
-		    </article>
+		    </article> -->
 		</section>
 	</div>
+
 	<footer>
 		<p class="top"><a href="#"><i class="fa fa-chevron-up fa-3x"></i></a></p>
         <p>&copy; 2015 Laurie Brown.</p>
     </footer>
+    <script type="text/x-handlebars-template" id="itemTemplate">
+	    {{#each articles}}
+	      <article class="clearfix cat-{{category}}">
+	        <header>
+	            <h1>{{title}}</h1>
+	            <div class="byline">
+	              By <a href="{{authorUrl}}">{{author}}</a> published <time pubdate datetime="{{publishedOn}}">{{publishedOn}}</time>
+	            </div>
+	        </header>
+	        <section class="article-body clearfix">{{{body}}}</section>
+	        <hr>
+	      </article>
+	    {{/each}}
+    </script>
   	<script src="js/libs/jquery-2.1.4.min.js"></script>
   	<script src="js/blog.js"></script>
   	<script src="js/blogArticles.js"></script>
+  	<script src="js/libs/handlebars-v4.0.5.js"></script>
   	<script src="js/blog.main.js"></script>
+
 </body>
 </html>
