@@ -8,7 +8,6 @@ GENERAL
 *************************************************/
 body {
   background: #fff;
-
   font: Helvetica Neue, Helvectica, Arial, serif;
   font-weight: 300;
   font-size: 1em;
@@ -65,6 +64,12 @@ span {
   color: pink;
 }
 
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+
 /*************************************************
 HEADING - Main
 *************************************************/
@@ -88,7 +93,8 @@ HEADING - Main
 }
 
 #main-header h2 {
-	padding: 10px 0 0 0;
+	font-size: 0.925em;
+	padding: 6px 0 0 0;
 }
 
 /*************************************************
@@ -175,6 +181,10 @@ footer {
   padding: 0 20px 20px;
 }
 
+.top {
+	text-align: center;
+}
+
 /*************************************************
 TEMPLATE
 *************************************************/
@@ -242,6 +252,10 @@ nav a.selected, nav a:hover {
 /* Large tablets and small desktops */
 @media screen and (min-width: 660px) {
 
+  body{
+  	background: url('../img/bg-11.jpg') repeat;
+  }
+
   /*************************************************
   HEADER
   *************************************************/
@@ -250,6 +264,7 @@ nav a.selected, nav a:hover {
     height: 90px;
     border-bottom: 5px solid #599a68;
     margin-bottom: 60px;
+    padding-top: 10px;
   }
 
   nav {
@@ -274,8 +289,8 @@ nav a.selected, nav a:hover {
   }
 
   #main-header h2 {
-    font-size: 0.825em;
     margin-bottom: 20px;
+
   }
 
   /*.pull-right,

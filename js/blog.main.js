@@ -5,7 +5,7 @@ blog.main = (function() {
 	// cached jquery objects
 	var $pLog = $('#pLog'),
 		$articleDetail,
-		$firstParagraph,
+		$articleBody,
 		$selectAuthor,
 		$optgroup,
 		$selectCategory;
@@ -32,13 +32,18 @@ blog.main = (function() {
 				});
 				$('.hide').on('click', function(e) {
 					e.preventDefault();
-					$(this).siblings().filter('p:nth-of-type(n+2)').slideUp();
+					$('html, body').animate({ scrollTop: $(this).parent().parent().offset().top - 30 }, 500);
+					$(this).siblings().filter('p:nth-of-type(n+2)').hide();
 					$(this).prev().show();
 					$(this).hide();
+
 				});
 				$('.about').on('click', function(e) {
 					e.preventDefault();
 					$('.about-container').toggle();
+				});
+				$('.top').on('click', function(){
+					$('html, body').animate({ scrollTop: $('#main-header').offset().top }, 500);
 				});
 				// add change listener to the select elements
 				$selectAuthor.on('change', function(){
@@ -87,8 +92,8 @@ blog.main = (function() {
 				// hides all pargraphs except the first one
 				$articleDetail = $('.article-body p:nth-of-type(n+2)');
 				$articleDetail.hide();
-				$firstParagraph = $('.article-body');
-				$firstParagraph.each(function(){
+				$articleBody = $('.article-body');
+				$articleBody.each(function(){
 					$(this).append('<a href="#" class="more"> more&darr;</a>');
 					$(this).append('<a href="#" class="hide"> hide&uarr;</a>');
 				});
