@@ -19,18 +19,11 @@ blog.main = (function() {
 				// calls the sortArticlesOnPubDate to sort the blog.rawdata array based on the publishedOn key of each article object.
 				self.sortArticlesOnPubDate(blog.rawdata);
 				self.makeArticles();
-				self.initArticles();
-
-				// tests sorting functionality
-				// self.printPubDate(blog.rawdata, "Published On Date");
-				// self.sortArticlesOnPubDate(blog.rawdata);
-				// self.mylog("<br>After sorting:");
-				// self.printPubDate(blog.rawdata, "Published On Date");
 			},
 
 			// event listeners for this module
 			addEventListeners: function() {
-				//console.log("hi");
+				// add click listener to elements
 				$('.more').on('click', function(e) {
 					e.preventDefault();
 					$(this).prev().siblings().slideDown();
@@ -45,44 +38,42 @@ blog.main = (function() {
 				});
 				$('.about').on('click', function(e) {
 					e.preventDefault();
-					//console.log('click');
 					$('.about-container').toggle();
 				});
-
-				//Bind change listener to the select elements
+				// add change listener to the select elements
 				$selectAuthor.on('change', function(){
+					// hides all the articles
 				 	$('article').hide();
 				 	// resets the category filter select element
 				 	$selectCategory.prop('selectedIndex',0);
-
-				  	// selected filter value
+				  	// get the selected filter value
 				  	var filterSelection = $selectAuthor.val(); // horse whisperer
-
+				  	// find all the author names in the byline
 				  	$('#articles').find('.byline a').each(function(){
-				  		var authorName = $(this).text(); // horse whisperer
+				  		var authorName = $(this).text(); // e.g. horse whisperer
 				  		if( authorName == filterSelection){
-				  			//console.log('matched' , $(this).closest('article'));
+				  			// fadeIn the closest article
 				  			$(this).closest('article').fadeIn();
 				  		}
 				  	});
 				});
 
 				$selectCategory.on('change', function(){
+					// hides all the articles
 					$('article').hide();
 					// resets the author filter select element
 					$selectAuthor.prop('selectedIndex',0);
-
+					// get the selected filter value
 				  	var filterSelection = $selectCategory.val();
+				  	// adds cat- to the begining of the filtered selection
 				  	var filterSelectionCat = "cat-" + filterSelection;
-				  	//console.log(filterSelectionCat);
-
+				  	// iterate over each article and get the class names, it returns a string
 				  	$('article').each(function(){
-				   		//console.log($(this).attr('class'));
 				   		var classNames = $(this).attr('class');
-				   		//console.log(typeof classNames);
-				   		// make it an array and slit on space ' '
+				   		// console.log(typeof classNames);
+				   		// make it an array and split on space ' '
 				   		var catArray = classNames.split(' ');
-				   		console.log(catArray[0]);
+				   		// if the article has a class of the matches filteredSelectionCat
 				   		if(catArray.indexOf(filterSelectionCat) > -1){
 				   			// fadeIn articles with matching category
 				   			$(this).fadeIn();
@@ -93,6 +84,7 @@ blog.main = (function() {
 
 			// initialize the articles section
 			initArticles: function() {
+				// hides all pargraphs except the first one
 				$articleDetail = $('.article-body p:nth-of-type(n+2)');
 				$articleDetail.hide();
 				$firstParagraph = $('.article-body');
@@ -111,8 +103,6 @@ blog.main = (function() {
 			makeAuthorFilter: function() {
 				$selectAuthor = $('<select id="select-author"></select>');
 				var $option = $('<option value="all">Filter by Authors</option>');
-				// $optgroup = $('<optgroup label="Authors"></optgroup>');
-				// $selectAuthor.append($optgroup);
 				$selectAuthor.append($option);
 				$('#articles').prepend($selectAuthor);
 				var authorArray = [];
@@ -121,11 +111,8 @@ blog.main = (function() {
 					var author = blog.rawdata[i].author;
 					authorArray.push(author);
 				}
-
+				// get rid of any dups in authorArray
 				var uniqueAuthors = $.unique(authorArray);
-
-				//console.log(authorArray.join(', '));
-				//console.log('new :' + $.unique(authorArray));
 
 				for(var i = 0; i < uniqueAuthors.length; i++ ){
 					$option = $("<option></option>");
@@ -138,25 +125,20 @@ blog.main = (function() {
 				}
 			},
 
-
 			// makeCategoryFilter
 			makeCategoryFilter: function() {
 				$selectCategory = $('<select id="select-category"></select>');
 				var $option = $('<option value="all">Filter by Category</option>');
 				$selectCategory.append($option);
 				$('#articles').prepend($selectCategory);
-
 				var catArray = [];
 
 				for(var i = 0; i < blog.rawdata.length; i++ ){
 					var cat = blog.rawdata[i].category;
 					catArray.push(cat);
 				}
-
+				// get rid of any dups in catArray
 				var uniqueCategories = $.unique(catArray);
-
-				//console.log(authorArray.join(', '));
-				//console.log('new :' + $.unique(authorArray));
 
 				for(var i = 0; i < uniqueCategories.length; i++ ){
 					$option = $("<option></option>");
@@ -171,7 +153,6 @@ blog.main = (function() {
 
 			// sort articles on publishedOn date (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
 			sortArticlesOnPubDate: function(A) {
-				//console.log("howdy");
 				A.sort(
 					function(a, b) {
 						if (a.publishedOn < b.publishedOn) { return  1; }
@@ -203,12 +184,13 @@ blog.main = (function() {
 				for(var i = 0; i < blog.rawdata.length; i++ ){
 					// var that holds each article object in the blog.rawdata array
 					article = blog.rawdata[i];
-					//console.log('article index = ' + i);
 					// pass the article object to the makeAr constructor function
 					var arObj = new self.makeArticle(article);
 					// append the cloned template to #articles section
 					$('#articles').append(arObj.toHtml());
 				}
+				// set initial state
+				self.initArticles();
 			},
 
 			// constructor function for article objects in blog.rawdata array
@@ -223,7 +205,7 @@ blog.main = (function() {
 			}
 
 	};
-
+	// prototype for the makeArticle contructor function
 	self.makeArticle.prototype.toHtml = function() {
 		var categoryClassName = 'cat-' + this.category;
 		// makes a copy of article.arTemplate
