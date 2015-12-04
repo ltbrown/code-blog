@@ -4,7 +4,7 @@ IMPORT NORMALIZE
 @import url('http://necolas.github.io/normalize.css/3.0.2/normalize.css');
 
 /*************************************************
-GENERAL
+GENERAL - SMACSS = BASE
 *************************************************/
 body {
   background: #fff;
@@ -71,7 +71,7 @@ hr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
 
 /*************************************************
-HEADING - Main
+HEADING - Main SMACSS = Layout
 *************************************************/
 
 #main-header {
@@ -141,6 +141,7 @@ ARTICLES
 #articles select {
 	display: block;
 	margin-top: 10px;
+	width: 100%;
 }
 
 .byline,
@@ -160,11 +161,6 @@ ARTICLES
 	margin: 20px 20px 20px 0;
 }
 
-#select-category,
-#select-author {
-	width: 180px;
-	/*text-transform: lowercase;*/
-}
 
 /*************************************************
 FOOTER
@@ -204,7 +200,7 @@ CLEARFIX
 }
 
 /*************************************************
-COLORS
+COLORS SMACSS = Theme
 *************************************************/
 
 /* site body */
@@ -246,11 +242,11 @@ nav a.selected, nav a:hover {
 }
 
 /*************************************************
-  Media Queries
+  Media Queries SMACSS = State
   *************************************************/
 
 /* Large tablets and small desktops */
-@media screen and (min-width: 660px) {
+@media screen and (min-width: 670px) {
 
   body{
   	background: url('../img/bg-11.jpg') repeat;
@@ -293,6 +289,10 @@ nav a.selected, nav a:hover {
 
   }
 
+  #articles select {
+	width: 180px;
+  }
+
   /*.pull-right,
   .pull-left {
 	float: none;
@@ -303,4 +303,18 @@ nav a.selected, nav a:hover {
   	width: 100%;
   }*/
 
+
+}
+
+
+
+/*debug styles*/
+#pLog{
+	/*height: 500px;
+	background-color: pink;*/
+	display:none;
+}
+
+#articles{
+	/*display: none;*/
 }

@@ -18,7 +18,8 @@ blog.main = (function() {
 			init: function() {
 				// calls the sortArticlesOnPubDate to sort the blog.rawdata array based on the publishedOn key of each article object.
 				self.sortArticlesOnPubDate(blog.rawdata);
-				self.makeArticles();
+				//self.makeArticles();
+				self.makeArticlesHandlebars();
 			},
 
 			// event listeners for this module
@@ -36,7 +37,6 @@ blog.main = (function() {
 					$(this).siblings().filter('p:nth-of-type(n+2)').hide();
 					$(this).prev().show();
 					$(this).hide();
-
 				});
 				$('.about').on('click', function(e) {
 					e.preventDefault();
@@ -60,6 +60,10 @@ blog.main = (function() {
 				  			// fadeIn the closest article
 				  			$(this).closest('article').fadeIn();
 				  		}
+				  		if(filterSelection === 'all'){
+				   			// console.log('hi');
+					  		$('article').show();
+					  	}
 				  	});
 				});
 
@@ -83,7 +87,12 @@ blog.main = (function() {
 				   			// fadeIn articles with matching category
 				   			$(this).fadeIn();
 				   		}
+				   		if(filterSelection === 'all'){
+				   			// console.log('hi');
+					  		$('article').show();
+					  	}
 				  	});
+
 				});
 			},
 
@@ -196,6 +205,37 @@ blog.main = (function() {
 				}
 				// set initial state
 				self.initArticles();
+			},
+
+			// makeArticlesHandlebars
+			makeArticlesHandlebars: function() {
+				var template = $('#itemTemplate').html();
+				// Handlebars compiles the template into a callable function
+			      var renderer = Handlebars.compile(template);
+			      // put data in a variable
+			      var articles = blog.rawdata;
+			      // call the compiled function with the template date
+			      //var result = renderer({articles});
+			      var result = renderer({articles});
+			      //var result = renderer({blog.raw});
+			      //console.log('hi' + result);
+			      //format date before appending to to #articles
+
+			      $('#articles').append(result);
+			      self.formatDate();
+			    // call init articles()
+				self.initArticles();
+			},
+			formatDate: function() {
+				// $('.byline').find('time').html('exactly ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago');
+				//console.log('hi');
+				$('.byline').find('time').each(function(){
+					//console.log($(this).text());
+					var pubdate = $(this).text();
+					var string = 'exactly ' + parseInt((new Date() - new Date(pubdate))/60/60/24/1000) + ' days ago';
+					$(this).text(string);
+					//console.log('string = ' + string);
+				});
 			},
 
 			// constructor function for article objects in blog.rawdata array
