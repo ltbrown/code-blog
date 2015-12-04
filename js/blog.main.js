@@ -215,13 +215,27 @@ blog.main = (function() {
 			      // put data in a variable
 			      var articles = blog.rawdata;
 			      // call the compiled function with the template date
-			      var result = renderer({articles})
+			      //var result = renderer({articles});
+			      var result = renderer({articles});
 			      //var result = renderer({blog.raw});
-			      console.log(result);
-			      $('#articles').append(result);
+			      //console.log('hi' + result);
+			      //format date before appending to to #articles
 
+			      $('#articles').append(result);
+			      self.formatDate();
 			    // call init articles()
 				self.initArticles();
+			},
+			formatDate: function() {
+				// $('.byline').find('time').html('exactly ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago');
+				//console.log('hi');
+				$('.byline').find('time').each(function(){
+					//console.log($(this).text());
+					var pubdate = $(this).text();
+					var string = 'exactly ' + parseInt((new Date() - new Date(pubdate))/60/60/24/1000) + ' days ago';
+					$(this).text(string);
+					//console.log('string = ' + string);
+				});
 			},
 
 			// constructor function for article objects in blog.rawdata array
