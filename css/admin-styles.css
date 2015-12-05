@@ -1,0 +1,19 @@
+.divBlock {
+	display: inline-block;
+	vertical-align: top;
+	width: 47%;
+	padding: 2px;
+}
+#tBody {
+	font-size: 1em;
+	height: 300px;
+	width: 500px;
+}
+.pCommon {
+	width: 80%; height: 30%;
+	border: 1px solid black;
+	padding: 2px;
+}
+.pOut {
+	display: block;
+}
