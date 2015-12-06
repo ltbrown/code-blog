@@ -54,8 +54,6 @@ h3 em {
 /*set max-width to 50% so images aren't too big*/
 img{
 	max-width: 50%;
-	/*width: 400px;
-	height: auto;*/
 	padding: 20px;
 	border: 1px solid rgba(30,30,30,0.1);
 }
