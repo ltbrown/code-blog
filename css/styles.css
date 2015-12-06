@@ -7,7 +7,7 @@ IMPORT NORMALIZE
 GENERAL - SMACSS = BASE
 *************************************************/
 body {
-  background: #fff;
+  /*background: #fff;*/
   font: Helvetica Neue, Helvectica, Arial, serif;
   font-weight: 300;
   font-size: 1em;
@@ -124,7 +124,7 @@ nav a {
 
 #wrapper,
 .about-container {
-	max-width: 980px;
+	max-width: 1100px;
   	margin: 0 auto;
   	padding: 0 20px;
 }
