@@ -177,7 +177,10 @@ hr {
 ================================ */
 
 
-
+.hideMe{
+	/*border: 1px solid pink;*/
+	display: none;
+}
 
 
 

@@ -129,14 +129,18 @@ blog.admin = (function() {
 				// add click listener to elements
 				$('.more').on('click', function(e) {
 					e.preventDefault();
-					$(this).prev().siblings().slideDown();
+					//$(this).prev().siblings().slideDown();
+					$(this).parent().find('.hideMe').removeClass('hideMe');
 					$(this).next().show();
 					$(this).hide();
 				});
 				$('.hide').on('click', function(e) {
 					e.preventDefault();
 					// $('html, body').animate({ scrollTop: $(this).parent().parent().offset().top - 30 }, 500);
-					$(this).siblings().not('p:first-child').hide();
+					//$(this).siblings().not('p:first-child').hide();
+					$articleDetail = $('.article-body p:nth-of-type(n+1)').nextAll();
+					// $articleDetail.hide();
+					$articleDetail.addClass('hideMe');
 					$(this).prev().show();
 					$(this).hide();
 				});
@@ -145,8 +149,11 @@ blog.admin = (function() {
 			// initialize the articles section
 			initArticle: function() {
 				// hides all pargraphs except the first one
-				$articleDetail = $('.article-body p:first-child').siblings();
-				$articleDetail.hide();
+				// $articleDetail = $('.article-body p:first-child').siblings();
+				// $articleDetail.hide();
+				$articleDetail = $('.article-body p:nth-of-type(n+1)').nextAll();
+				// $articleDetail.hide();
+				$articleDetail.addClass('hideMe');
 				$articleBody = $('.article-body');
 				$articleBody.each(function(){
 					$(this).append('<a href="#" class="more"> more&darr;</a>');
