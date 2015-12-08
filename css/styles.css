@@ -352,3 +352,8 @@ h1 {
 #articles{
 	/*display: none;*/
 }
+
+.hideMe{
+	/*border: 1px solid pink;*/
+	display: none;
+}

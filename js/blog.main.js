@@ -12,10 +12,10 @@ blog.main = (function() {
 
 	// variables
 	var article,
-		arObj,
-		eTag,
-		ls_eTag,
-		artiData,
+		// arObj,
+		// eTag,
+		// ls_eTag,
+		articleData,
 		aboutOpened;
 		self = {
 
@@ -32,17 +32,17 @@ blog.main = (function() {
 				url: "js/blogArticles.json",
 				success: function(data, sucess, xhr){
 					//console.log(xhr.getResponseHeader("eTag"));
-					eTag = xhr.getResponseHeader("eTag");
+					var eTag = xhr.getResponseHeader("eTag");
 					console.log(eTag);
 					console.log(localStorage.ergodicEtag);
 					if (eTag == localStorage.ergodicEtag){
-						console.log("Load what's in local storage");
-						artiData = JSON.parse(localStorage.getItem('blogData'));
-						//console.log("ARTICLE DATA = ", artiData);
-						self.sortArticlesOnPubDate(artiData);
+						//console.log("Load what's in local storage");
+						articleData = JSON.parse(localStorage.getItem('blogData'));
+						//console.log("ARTICLE DATA = ", articleData);
+						self.sortArticlesOnPubDate(articleData);
 						self.makeArticlesHandlebars();
 					}else{
-						console.log("getJSON");
+						//console.log("getJSON");
 						$.getJSON("js/blogArticles.json", function(data){
 							//console.log(data);
 							localStorage.setItem('blogData', JSON.stringify(data));
@@ -50,10 +50,10 @@ blog.main = (function() {
 							//   console.log(key + ' : ' + localStorage[key]);
 							// };
 							//console.log(localStorage["blogData"]);
-							artiData = JSON.parse(localStorage.getItem('blogData'));
+							articleData = JSON.parse(localStorage.getItem('blogData'));
 							// console log add , object or array to console type cohersion
-							// console.log("ARTICLE DATA = ", artiData);
-							self.sortArticlesOnPubDate(artiData);
+							// console.log("ARTICLE DATA = ", articleData);
+							self.sortArticlesOnPubDate(articleData);
 							self.makeArticlesHandlebars();
 						});
 						localStorage.setItem('ergodicEtag', eTag);
@@ -65,7 +65,7 @@ blog.main = (function() {
 		checkLocalStorage: function() {
 			//console.log('local storage hello');
 			//localStorage.setItem('ls_aboutOpened', 'open');
-			console.log(localStorage.getItem('ls_aboutOpened'))
+			//console.log(localStorage.getItem('ls_aboutOpened'))
 			if(localStorage.getItem('ls_aboutOpened') === 'open'){
 				aboutOpened = true;
 				$('.about-container').show();
@@ -79,21 +79,24 @@ blog.main = (function() {
 			// add click listener to elements
 			$('.more').on('click', function(e) {
 				e.preventDefault();
-				$(this).prev().siblings().slideDown();
+				//$(this).prev().siblings().slideDown();
+				$(this).parent().find('.hideMe').removeClass('hideMe');
+				//$(this).prev().siblings().removeClass('hideMe');
 				$(this).next().show();
 				$(this).hide();
 			});
 			$('.hide').on('click', function(e) {
 				e.preventDefault();
 				$('html, body').animate({ scrollTop: $(this).parent().parent().offset().top - 30 }, 500);
-				$(this).siblings().filter('p:nth-of-type(n+2)').hide();
+				//$(this).siblings().filter('p:nth-of-type(n+2)').hide();
+				$(this).parent().find('p:nth-of-type(n+1)').nextAll().addClass('hideMe');
 				$(this).prev().show();
 				$(this).hide();
 			});
 			$('.about').on('click', function(e) {
 				e.preventDefault();
 				// $('.about-container').toggle();
-				console.log(aboutOpened);
+				//console.log(aboutOpened);
 				if(aboutOpened){
 					$('.about-container').hide();
 					aboutOpened = false;
@@ -161,8 +164,10 @@ blog.main = (function() {
 		// initialize the articles section
 		initArticles: function() {
 			// hides all pargraphs except the first one
-			$articleDetail = $('.article-body p:nth-of-type(n+2)');
-			$articleDetail.hide();
+			//$articleDetail = $('.article-body p:nth-of-type(n+2)').nextAll();
+			$articleDetail = $('.article-body p:nth-of-type(n+1)').nextAll();
+			// $articleDetail.hide();
+			$articleDetail.addClass('hideMe');
 			$articleBody = $('.article-body');
 			$articleBody.each(function(){
 				$(this).append('<a href="#" class="more"> more&darr;</a>');
@@ -183,8 +188,8 @@ blog.main = (function() {
 			$('#articles').prepend($selectAuthor);
 			var authorArray = [];
 
-			for(var i = 0; i < artiData.length; i++ ){
-				var author = artiData[i].author;
+			for(var i = 0; i < articleData.length; i++ ){
+				var author = articleData[i].author;
 				authorArray.push(author);
 			}
 			// get rid of any dups in authorArray
@@ -209,8 +214,8 @@ blog.main = (function() {
 			$('#articles').prepend($selectCategory);
 			var catArray = [];
 
-			for(var i = 0; i < artiData.length; i++ ){
-				var cat = artiData[i].category;
+			for(var i = 0; i < articleData.length; i++ ){
+				var cat = articleData[i].category;
 				catArray.push(cat);
 			}
 			// get rid of any dups in catArray
@@ -253,6 +258,7 @@ blog.main = (function() {
 			}
 			self.mylog(pubDateList);
 		},
+
 		// makeArticlesHandlebars
 		makeArticlesHandlebars: function() {
 			$.get( "../partials/template.html", function( data ){
@@ -261,7 +267,7 @@ blog.main = (function() {
 		      	var renderer = Handlebars.compile(data);
 		     	// put data in a variable
 		      	//var articles = blog.rawdata;
-		      	var articles = artiData;
+		      	var articles = articleData;
 		      	// call the compiled function with the template data
 		      	var result = renderer({articles});
 		      	//console.log('hi' + result);
@@ -277,22 +283,13 @@ blog.main = (function() {
 		},
 		formatMarkdownArticles: function(){
 			$('.markdown').each(function(){
-				console.log($(this).text());
+				//console.log($(this).text());
 				var markdown = $(this).text();
 				var m = marked(markdown);
 				$(this).html(m);
 			})
 			// call init articles()
 			self.initArticles();
-
-				// marked library does it's magic
-				// converts markdown to html
-    			//var m = marked(markdown);
-			    // renders the html created by markdown
-			    // render article preview (rendered as HTML)
-			    //$('.markdown').html(m);
-
-
 		},
 		// format date
 		formatDate: function() {
