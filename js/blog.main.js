@@ -262,7 +262,7 @@ blog.main = (function() {
 		     	// put data in a variable
 		      	//var articles = blog.rawdata;
 		      	var articles = artiData;
-		      	// call the compiled function with the template date
+		      	// call the compiled function with the template data
 		      	var result = renderer({articles});
 		      	//console.log('hi' + result);
 		      	//format date before appending to to #articles

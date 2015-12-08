@@ -25,11 +25,39 @@ blog.admin = (function() {
 				// add event listeners
 				self.addEventListeners();
 				// render once on docuemnt load
-				self.render();
-
+				self.checkLocalStorage();
 				// hljs.configure({useBR: true});
-
 			},
+			checkLocalStorage: function() {
+				//delete localStorage.ls_title;
+				//console.log(localStorage.getItem('ls_title'));
+				if(localStorage.getItem('ls_title') != null){
+					var localTitle = localStorage.getItem('ls_title');
+					$title.val(localTitle);
+				}
+				if(localStorage.getItem('ls_category') != null){
+					var localTitle = localStorage.getItem('ls_category');
+					$category.val(localTitle);
+				}
+				if(localStorage.getItem('ls_author') != null){
+					var localTitle = localStorage.getItem('ls_author');
+					$author.val(localTitle);
+				}
+				if(localStorage.getItem('ls_authorUrl') != null){
+					var localTitle = localStorage.getItem('ls_authorUrl');
+					$authorUrl.val(localTitle);
+				}
+				if(localStorage.getItem('ls_date') != null){
+					var localTitle = localStorage.getItem('ls_date');
+					$date.val(localTitle);
+				}
+				if(localStorage.getItem('ls_textarea') != null){
+					var localTitle = localStorage.getItem('ls_textarea');
+					$textareaMarkdown.val(localTitle);
+				}
+				self.render();
+			},
+
 			// event listeners for this module
 			addEventListeners: function() {
 				// add click listener to elements
@@ -43,14 +71,44 @@ blog.admin = (function() {
 				$textareaMarkdown.on('input', function(){
 					self.render();
 					$(this).removeClass('is-initial');
+					var text = $(this).val();
+					localStorage.setItem('ls_textarea', text);
 				});
 
-				 // on user input (input fields), calls render to update the JSON obj
-				$title.on('input', self.render);
-				$category.on('input', self.render);
-				$author.on('input', self.render);
-				$authorUrl.on('input', self.render);
-				$date.on('input', self.render);
+				// on user input (input fields), calls render to update the JSON obj
+				// localStorage.setItem('ls_aboutOpened', 'open');
+				// console.log(localStorage.getItem('ls_aboutOpened'))
+				//$title.on('input', self.render);
+				$title.on('input', function(){
+					var text = $(this).val();
+					localStorage.setItem('ls_title', text);
+					console.log(localStorage.getItem('ls_title'));
+					self.render();
+				});
+				//$category.on('input', self.render);
+				$category.on('input', function(){
+					var text = $(this).val();
+					localStorage.setItem('ls_category', text);
+					self.render();
+				});
+				//$author.on('input', self.render);
+				$author.on('input', function(){
+					var text = $(this).val();
+					localStorage.setItem('ls_author', text);
+					self.render();
+				});
+				//$authorUrl.on('input', self.render);
+				$authorUrl.on('input', function(){
+					var text = $(this).val();
+					localStorage.setItem('ls_authorUrl', text);
+					self.render();
+				});
+				//$date.on('input', self.render);
+				$date.on('input', function(){
+					var text = $(this).val();
+					localStorage.setItem('ls_date', text);
+					self.render();
+				});
 
 				// when use click article preview button show template preview
 				$('#preview-article').on('click', function(e) {
@@ -155,19 +213,30 @@ blog.admin = (function() {
 
 			// make article preview from handlebars template by passing in the dataObj
 			makeArticlesHandlebars: function() {
-				var template = $('#itemTemplate').html();
-				// Handlebars compiles the template into a callable function
-			    var renderer = Handlebars.compile(template);
-			    // put data (object) in a variable
-			    // var article = mObj;
-			    //console.log(article);
-			    // call the handlebars callable function passing the data object
-			    var result = renderer(dataObj);
-			    //console.log('hi' + result);
-				// append template to node in DOM with an ID of #article-preview
-			    $('#article-preview').append(result);
-			    //self.formatDate();
-			    self.initArticle();
+				// use the same template as index.html
+				$.get( "../partials/template.html", function( data ){
+					console.log("Data Loaded: " + data );
+					var renderer = Handlebars.compile(data);
+					var articles = [dataObj];
+					console.log(articles);
+					var result = renderer({articles});
+					console.log('hi' + result);
+					$('#article-preview').append(result);
+				}).done(function() {
+					//self.formatMarkdownArticles();
+					self.initArticle();
+				});
+
+			},
+			formatMarkdownArticles: function(){
+				$('.markdown').each(function(){
+					console.log($(this).text());
+					var markdown = $(this).text();
+					var m = marked(markdown);
+					$(this).html(m);
+				})
+				// call init articles()
+				self.initArticle();
 			}
 		};
 	return self;
