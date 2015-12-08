@@ -1,0 +1,20 @@
+{{#each articles}}
+	<article class="clearfix cat-{{category}}">
+		<header>
+				<h1>{{title}}</h1>
+				<div class="byline">
+					By <a href="{{authorUrl}}">{{author}}</a> published <time pubdate datetime="{{publishedOn}}">{{publishedOn}}</time>
+				</div>
+		</header>
+		<section class="article-body clearfix">
+		{{#if body}}
+			{{{body}}}
+		{{/if}}
+		{{#if markdown}}
+			<div class="markdown">{{markdown}}</div>
+		{{/if}}
+		</section>
+		<hr>
+	</article>
+{{/each}}
+
