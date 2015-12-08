@@ -27,7 +27,7 @@ blog.admin = (function() {
 				// render once on docuemnt load
 				self.render();
 
-				hljs.configure({useBR: true});
+				// hljs.configure({useBR: true});
 
 			},
 			// event listeners for this module
@@ -122,6 +122,10 @@ blog.admin = (function() {
 			    $('.code').each(function(i, block) {
 				  hljs.highlightBlock(block);
 				});
+
+				// $('pre code').each(function(i, block) {
+				//     hljs.highlightBlock(block);
+				//  });
 
 			    // default input field values
 			    if($title.val() == ""){
