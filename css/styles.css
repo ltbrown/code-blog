@@ -121,10 +121,17 @@ nav a {
 }
 
 #wrapper,
-.about-container {
+.about-container,
+.stats-container {
 	max-width: 1100px;
   	margin: 0 auto;
   	padding: 0 20px;
+}
+
+.stats-container ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0 0 20px 5px;
 }
 
 /*************************************************
