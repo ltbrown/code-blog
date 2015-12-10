@@ -293,15 +293,8 @@ blog.main = (function() {
 			var numUniqueAuthors = uniqueAuthors.length;
 			//console.log('numUniqueAuthors = ' + numUniqueAuthors);
 			$('.numAuthors span').text(numUniqueAuthors);
-			//words on the site
-			//$('.numWords').text();
 
-			// $('.article-body').each(function(){
-			// 	$(this).text.length;
-			// 	console.log($(this).text.length);
-			// })
 
-			//
 		    //console.log("Article Data = " + articleData[1].markdown);
 		    var testData = [
 		    	{
@@ -336,36 +329,6 @@ blog.main = (function() {
 				 }
 			];
 
-		    // var authorArray = [];
-		    // articleData.forEach(function(article){
-		    // 	authorArray.push(article.author);
-		    // });
-		    // console.log(authorArray.join(", "));
-
-		    //word count?
-		    //title
-		    //
-		    //
-		    // var authorArray = [];
-		    // testData.forEach(function(article){
-		    // 	authorArray.push(article.author);
-		    // });
-		    // console.log(authorArray.join(", "));
-		    //
-
-			// var arr = self.filterArticles(testData, "body");
-			// console.log(arr);
-
-			// arr.forEach(function(item){
-		 //    	var str = item;
-		 //    	console.log(item);
-		 //    	console.log($(str).text());
-		 //    	var newString = $(str).text();
-		 //    	var newStringLength = self.countWords(newString);
-		 //    	console.log(newStringLength);
-		 //    });
-
-
 			//
 			var totalWordsArray = [];
 			//map = higher order function (takes another function as a parameter) get title and body?
@@ -377,12 +340,12 @@ blog.main = (function() {
 			var wordCountBody = 0;
 			arrMap.forEach(function(item){
 				var str = item;
-		    	console.log(item);
-		    	console.log($(str).text());
+		    	// console.log(item);
+		    	// console.log($(str).text());
 		    	var newString = $(str).text();
 		    	totalWordsArray.push(newString);
 		    	var newStringLength = self.countWords(newString);
-		    	console.log(newStringLength);
+		    	// console.log(newStringLength);
 		    	if(item === undefined)return;
 		    	wordCountBody += newStringLength;
 		    });
@@ -402,10 +365,11 @@ blog.main = (function() {
 
 			var totalWords = parseInt(wordCountBody) + parseInt(wordCountMarkdown);
 			//console.log(totalWords);
+
+			//words on the site
 			$('.numWords span').text(totalWords);
 
-			console.log( 'words array =' + totalWordsArray);
-
+			// console.log( 'words array =' + totalWordsArray);
 
 			var characterArray = [];
 			// var arrMap = totalWordsArray.map(function(item){
@@ -418,57 +382,12 @@ blog.main = (function() {
 				characterCount+= wordCharacterLength
 
 		    });
-			console.log(characterCount);
 
+			console.log(characterCount);
 			console.log(Math.round(characterCount/totalWords));
 			var averageWordLength = Math.round(characterCount/totalWords)
 			//var charactersArray = charactersArray.split('');
 			$('.avgWordLength span').text(averageWordLength);
-
-
-
-			// var cleanArray = [];
-			// totalWordsArray.forEach(function(item){
-			// 	var str = item;
-		 //    	console.log(item);
-		 //    	console.log($(str).text());
-		 //    	var newString = $(str).text();
-		 //    	var newStringClean = self.cleanUp(newString);
-		 //    	cleanArray.push(newStringClean);
-		 //    });
-			// console.log(cleanArray);
-			//
-			//$('.article-body').
-
-			//var arrayOfAwesomeWords = [];
-			// totalWordsArray.forEach(function(item){
-			// 	var str = item;
-		 //    	//console.log($(str).text());
-		 //    	var newString = $(str).text();
-		 //   		arrayOfAwesomeWords = newString.split(/\s+/);
-		 //    });
-
-			//console.log(arrayOfAwesomeWords);
-
-			// var arrMap = articleData.map(function(item){
-			// 	return item.markdown;
-			// });
-			//console.log(arrMap);
-
-			//Word Count
-			// var wordCountMarkdown = 0;
-			// arrMap.forEach(function(item){
-			// 	var markdown = item;
-			// 	var m = marked(markdown);
-			// 	var str = m;
-		 //    	console.log(item);
-		 //    	//console.log($(str).text());
-		 //    	var newString = $(str).text();
-		 //    	var newStringLength = self.countWords(newString);
-		 //    	//console.log(newStringLength);
-		 //    	wordCountMarkdown += newStringLength;
-		 //    });
-			// console.log('wordCountMarkdown = ' + wordCountMarkdown);
 
 			//reduce = higher order function (takes another function as a parameter) to get all body and markdown properties?
 			//
